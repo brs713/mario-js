@@ -17,18 +17,21 @@ formElem.onsubmit = function(event) {
     // figure out the height the user typed
     heightStr = heightElem.value;
 
-    // TODO 1
+    // TO-DO 1
     // if they didn't type anything at all, give a different error message,
     // something like "Please provide a height"
+    if (!heightStr) {  // NULL STRING EVALUATES TO FALSE, SO THIS WORKS!
+        displayError("You've gotta put <b>something</b> in.");
+        return;
+    }
 
-
-    // convert the string to an int
-    height = parseInt(heightStr);
+    // convert the string to an int (in base 10)
+    height = parseInt(heightStr, 10);
 
     // if the height is not-a-number, yell at them and exit early
-    // TODO 2
+    // TO-DO 2
     // negative numbers and zero should also be rejected here
-    if (isNaN(height)) {
+    if (isNaN(height) || (height <= 0)) {
         displayError("That's not a valid height.");
         return;
     }
@@ -51,7 +54,8 @@ formElem.onsubmit = function(event) {
  * Displays an error message on the text input, and colors it red
  */
 function displayError(message) {
-    heightElem.className = "invalid-field";
+    heightElem.className = "invalid-field whatever";  // THIS WILL OVERWRITES ALL CLASSES
+    //heightElem.className = "whatever";
     document.querySelector(".error-message").innerHTML = message;
 }
 
@@ -61,9 +65,10 @@ function displayError(message) {
  *
  * Undisplays the error message and removes the red CSS style
  */
-function clearError(message) {
-    // TODO 3
-    // implement this function.
+function clearError(message) {  // DON'T NEED THE 'message' PARAMETER HERE; UNUSED
+    // TO-DO 3
+    heightElem.classList.remove("invalid-field");
+    document.querySelector(".error-message").innerHTML = "";
 }
 
 
